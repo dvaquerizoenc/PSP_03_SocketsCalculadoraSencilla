@@ -14,21 +14,25 @@ public class Main {
 	public static final String IP_SERVER = "localhost";
 	
 	public static void main(String[] args) {
-		System.out.println("=============================");
-		System.out.println("    APLICACION DE CLIENTE    ");
-		System.out.println("=============================");
-		
-		InetSocketAddress direccionServidor = new InetSocketAddress(IP_SERVER, PUERTO);
-		
+		// Declaración de todas las variables usadas en el programa
 		Scanner sc = new Scanner(System.in);
 		
 		int num1, num2 = 0;
 		String op="";
 		String envioFinal="";
 		
+		InetSocketAddress direccionServidor = new InetSocketAddress(IP_SERVER, PUERTO); // Se define la direccion del servidor con su ip y puerto
+		
+		int operacion = 0;
+		char operacionLetra = ' ';
+		
+		System.out.println("=============================");
+		System.out.println("    APLICACION DE CLIENTE    ");
+		System.out.println("=============================");
+		
+		
 		try (Socket socketAlServidor = new Socket()){
-			int operacion = 0;
-			char operacionLetra = ' ';
+			
 			System.out.println("1. Sumar");
 			System.out.println("2. Restar");
 			System.out.println("3. Multiplicar");
@@ -70,18 +74,17 @@ public class Main {
 			envioFinal = operacionLetra+":"+num1+":"+num2;
 			
 			System.out.println("CLIENTE: Esperando a que el servidor acepte la conexión");
-			socketAlServidor.connect(direccionServidor);
+			socketAlServidor.connect(direccionServidor); // Se conecta al servidor
 			System.out.println("CLIENTE: Conexion establecida... a "+IP_SERVER+" por el puerto "+PUERTO);
 			
-			PrintStream salida = new PrintStream(socketAlServidor.getOutputStream());
+			PrintStream salida = new PrintStream(socketAlServidor.getOutputStream()); // Se envia con esta linea y la de abajo la información al servidor
 			salida.println(envioFinal);
 			
-			InputStreamReader entrada = new InputStreamReader(socketAlServidor.getInputStream());
-			
+			InputStreamReader entrada = new InputStreamReader(socketAlServidor.getInputStream()); // Se recibe la operación resulta del servidor
 			BufferedReader bf = new BufferedReader(entrada);
 			
 			System.out.println("CLIENTE: Esperando al resultado del servidor...");
-			String resultado = bf.readLine();
+			String resultado = bf.readLine(); // Se le el resultado de la operación
 			
 			System.out.println("CLIENTE: El resultado de la "+op+"es: "+resultado);
 		} catch(UnknownHostException e) {
