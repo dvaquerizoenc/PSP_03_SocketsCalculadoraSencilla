@@ -39,7 +39,7 @@ public class Main {
 				
 				System.out.println("SERVIDOR: Me ha llegado del cliente "+stringRecibido);
 				
-				String[] operadores = stringRecibido.split("-");
+				String[] operadores = stringRecibido.split(":");
 				char cOperacion = operadores[0].charAt(0);
 				int cNum1 = Integer.parseInt(operadores[1]);
 				int cNum2 = Integer.parseInt(operadores[2]);
